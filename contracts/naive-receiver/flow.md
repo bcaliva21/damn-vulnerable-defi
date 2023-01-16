@@ -1,0 +1,18 @@
+FLOW:
+    - invoke flashLoan(address _borrower, uint256 _borrowAmount)
+    - _borrower = flashLoanReceiver.address
+    - _borrowAmount = X
+        - define balanceBefore w/ address(this).balance (this is the pool)
+        - require balanceBefore gte _borrowAmount
+        - require _borrower is a contract
+        - invoke _borrower.functionCallWithValue(functionSig, msg.value)
+        - functionCallWithValue comes from the openzeppelin address library, it's a .call with some safety features
+        - functionSig = abi.encodeWithSignature("receiveEther(uint256)", FEE)
+        - msg.value = _borrowAmount
+        - the above results in invoking receiveEther(uint256 _fee, {msg.value})
+            - context { sender: pool, value: msg.value}
+            - require sender eq pool
+            - define amountToBeRepaid = msg.value + fee
+            - require address(this).balance gte amountToBeRepaid
+            - invoke _executeActionDuringFlashLoan()
+            - this is an empty function in flashLoanReceiver

